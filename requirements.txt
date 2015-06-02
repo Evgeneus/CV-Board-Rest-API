@@ -1,0 +1,3 @@
+Django==1.8.2
+-e git+https://github.com/toastdriven/django-haystack.git@3c88d41f9a02299d031eef8114dfd4fdc5ed358f#egg=django_haystack-master
+MySQL-python==1.2.5
