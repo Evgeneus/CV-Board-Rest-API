@@ -23,6 +23,7 @@ class SkillRate(models.Model):
     skill_id = models.ForeignKey(Skill, verbose_name=_('Skill'), related_name='skill_rate')
     self_rate = IntegerRangeField(verbose_name=_('Self rate'), min_value=1, max_value=10, blank=True, null=True)
     guests_rate = IntegerRangeField(verbose_name=_('Guests rate'), min_value=1, max_value=10, blank=True, null=True)
+    result_rate = IntegerRangeField(verbose_name=_('Result rate'), min_value=1, max_value=10, blank=True, null=True)
 
     class Meta:
         verbose_name = _('Skill Rate')
