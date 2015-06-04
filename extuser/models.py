@@ -6,7 +6,7 @@ from django.contrib.auth.models import (
 
 
 class ExtUserManager(BaseUserManager):
-    def create_user(self, email, date_of_birth, location, first_name, password=None):
+    def create_user(self, email, date_of_birth, location, first_name, password):
         """
         Creates and saves a User with the given email, date of
         birth and password.
