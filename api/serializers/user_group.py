@@ -1,11 +1,11 @@
-__all__ = ['ExtUserSerializer', 'GroupSerializer']
+__all__ = ['UserSerializer', 'GroupSerializer']
 
 from django.contrib.auth.models import Group
 from extuser.models import ExtUser
 from rest_framework import serializers
 
 
-class ExtUserSerializer(serializers.HyperlinkedModelSerializer):
+class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = ExtUser
         fields = ('first_name', 'last_name', 'email',
