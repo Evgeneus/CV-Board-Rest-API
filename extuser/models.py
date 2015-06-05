@@ -6,10 +6,11 @@ from django.contrib.auth.models import (
 
 
 class ExtUserManager(BaseUserManager):
-    def create_user(self, email, date_of_birth, location, first_name, password):
+    def create_user(self, email, date_of_birth, location, first_name,
+                    password, last_name, age, desired_salary, other):
         """
-        Creates and saves a User with the given email, date of
-        birth and password.
+        Creates and saves a User with the given email, date_of_birth, location,
+        first_name, last_name, age, desired_salary, other and password.
         """
         if not email:
             raise ValueError('Users must have an email address')
@@ -19,6 +20,10 @@ class ExtUserManager(BaseUserManager):
             date_of_birth=date_of_birth,
             location=location,
             first_name=first_name,
+            last_name=last_name,
+            age=age,
+            desired_salary=desired_salary,
+            other=other
         )
 
         user.set_password(password)
