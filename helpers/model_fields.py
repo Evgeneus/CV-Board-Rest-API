@@ -1,3 +1,5 @@
+__all__ = ['IntegerRangeField']
+
 from django.db import models
 
 

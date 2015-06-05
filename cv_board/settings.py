@@ -112,5 +112,8 @@ AUTH_USER_MODEL = 'extuser.ExtUser'
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAdminUser',),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+    ),
     'PAGE_SIZE': 10
 }
