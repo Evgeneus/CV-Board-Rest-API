@@ -4,10 +4,13 @@ from django.contrib.auth.models import (
     AbstractBaseUser,
     PermissionsMixin)
 
+from helpers import IntegerRangeField
+from helpers import roles
+
 
 class ExtUserManager(BaseUserManager):
     def create_user(self, email, date_of_birth, location, first_name,
-                    password, last_name, age, desired_salary, other):
+                    password, last_name, age, desired_salary, other, role):
         """
         Creates and saves a User with the given email, date_of_birth, location,
         first_name, last_name, age, desired_salary, other and password.
@@ -23,11 +26,13 @@ class ExtUserManager(BaseUserManager):
             last_name=last_name,
             age=age,
             desired_salary=desired_salary,
-            other=other
+            other=other,
+            role=role
         )
 
         user.set_password(password)
         user.save(using=self._db)
+
         return user
 
     def create_superuser(self, email, date_of_birth, location, first_name, password):
@@ -35,15 +40,17 @@ class ExtUserManager(BaseUserManager):
         Creates and saves a superuser with the given email, date of
         birth and password.
         """
-        user = self.create_user(
-            email=email,
-            password=password,
+        user = self.model(
+            email=self.normalize_email(email),
             date_of_birth=date_of_birth,
             location=location,
             first_name=first_name,
+            role=roles.ROLE_ADMIN
         )
-        user.is_admin = True
+
+        user.set_password(password)
         user.save(using=self._db)
+
         return user
 
 
@@ -53,7 +60,7 @@ class ExtUser(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(verbose_name='Email address', max_length=255, unique=True)
     date_of_birth = models.DateField(verbose_name='Birthday')
     is_active = models.BooleanField(verbose_name='Is active', default=True)
-    is_admin = models.BooleanField(verbose_name='Is admin', default=False)
+    role = IntegerRangeField(verbose_name='Role', min_value=0, max_value=2, default=roles.ROLE_USER)
     age = models.IntegerField(verbose_name='Age', blank=True, null=True)
     desired_salary = models.IntegerField(verbose_name='Desired salary', blank=True, null=True)
     register_date = models.DateField(verbose_name='Register date', auto_now_add=True)
@@ -91,4 +98,7 @@ class ExtUser(AbstractBaseUser, PermissionsMixin):
     def is_staff(self):
         "Is the user a member of staff?"
         # Simplest possible answer: All admins are staff
-        return self.is_admin
+        if self.role == roles.ROLE_ADMIN:
+            return True
+        else:
+            return False

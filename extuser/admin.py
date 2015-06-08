@@ -12,15 +12,15 @@ class ExtUserAdmin(UserAdmin):
     list_display = ('first_name', 'last_name', 'email',
                     'date_of_birth', 'age', 'location',
                     'desired_salary', 'register_date',
-                    'last_change', 'is_admin', 'is_active', 'other')
+                    'last_change', 'role', 'is_active', 'other')
 
-    list_filter = ('is_admin',)
+    list_filter = ('role',)
 
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
         ('Personal info', {'fields': ('first_name', 'last_name',
                                       'date_of_birth', 'age', 'location',)}),
-        ('Permissions', {'fields': ('is_admin',)}),
+        ('Permissions', {'fields': ('role',)}),
         ('Salary', {'fields': ('desired_salary',)}),
         ('Additional infornations', {'fields': ('is_active', 'other')})
     )
@@ -30,7 +30,7 @@ class ExtUserAdmin(UserAdmin):
                 'fields': ('email', ('date_of_birth',), 'password1', 'password2')}),
         ('Personal info', {'fields': ('first_name', 'last_name',
                                       'age', 'location',)}),
-        ('Permissions', {'fields': ('is_admin',)}),
+        ('Permissions', {'fields': ('role',)}),
         ('Salary', {'fields': ('desired_salary',)}),
         ('Additional infornations', {'fields': ('other',)}),
     )

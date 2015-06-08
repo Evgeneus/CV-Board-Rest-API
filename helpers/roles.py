@@ -1,0 +1,9 @@
+ROLE_USER = 0
+ROLE_ADMIN = 1
+ROLE_MANAGER = 2
+
+USER_ROLES = {
+    ROLE_USER: "User",
+    ROLE_ADMIN: "Admin",
+    ROLE_MANAGER: "Manager"
+}

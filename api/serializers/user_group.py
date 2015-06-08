@@ -4,6 +4,8 @@ from django.contrib.auth.models import Group
 from extuser.models import ExtUser
 from rest_framework import serializers
 
+from helpers import roles
+
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -11,21 +13,31 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ('first_name', 'last_name', 'email',
                   'date_of_birth', 'age', 'location',
                   'desired_salary', 'register_date',
-                  'last_change', 'is_admin', 'is_active',
-                  'other', 'password', )
+                  'last_change', 'role', 'is_active',
+                  'other', 'password')
 
     def create(self, validated_data):
         ModelClass = self.Meta.model
         try:
-            instance = ModelClass.objects.create_user(email=validated_data.get('email'),
-                                                      date_of_birth=validated_data.get('date_of_birth'),
-                                                      location=validated_data.get('location'),
-                                                      first_name=validated_data.get('first_name'),
-                                                      password=validated_data.get('password'),
-                                                      last_name=validated_data.get('last_name'),
-                                                      age=validated_data.get('age'),
-                                                      desired_salary=validated_data.get('desired_salary'),
-                                                      other=validated_data.get('other', ""))
+            role = validated_data.get('role')
+
+            if role == roles.ROLE_ADMIN:
+                instance = ModelClass.objects.create_superuser(email=validated_data.get('email'),
+                                                               date_of_birth=validated_data.get('date_of_birth'),
+                                                               location=validated_data.get('location'),
+                                                               first_name=validated_data.get('first_name'),
+                                                               password=validated_data.get('password'))
+            else:
+                instance = ModelClass.objects.create_user(email=validated_data.get('email'),
+                                                          date_of_birth=validated_data.get('date_of_birth'),
+                                                          location=validated_data.get('location'),
+                                                          first_name=validated_data.get('first_name'),
+                                                          password=validated_data.get('password'),
+                                                          last_name=validated_data.get('last_name'),
+                                                          age=validated_data.get('age'),
+                                                          desired_salary=validated_data.get('desired_salary'),
+                                                          other=validated_data.get('other', ""),
+                                                          role=validated_data.get('role', roles.ROLE_USER))
         except TypeError as exc:
             msg = (
                 'Got a `TypeError` when calling `%s.objects.create_user()`. '
