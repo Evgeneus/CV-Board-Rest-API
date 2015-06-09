@@ -1,14 +1,30 @@
-__all__ = ['UserViewset', 'GroupViewset']
+__all__ = ['UserView', 'GroupViewset']
 
 from django.contrib.auth.models import Group
-from extuser.models import ExtUser
-from api.serializers import UserSerializer, GroupSerializer
-from rest_framework import viewsets
+from api.serializers import GroupSerializer
+from rest_framework import viewsets, views
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.parsers import JSONParser
+from rest_framework.renderers import JSONRenderer
+from rest_framework.response import Response
+from rest_framework import status
+
+from api.serializers import EditUserSerializer
 
 
-class UserViewset(viewsets.ModelViewSet):
-    queryset = ExtUser.objects.all()
-    serializer_class = UserSerializer
+class UserView(views.APIView):
+    permission_classes = (IsAuthenticated,)
+    parser_classes = (JSONParser,)
+    renderer_classes = (JSONRenderer,)
+
+    def patch(self, request):
+        user = request.user
+
+        serializer = EditUserSerializer(instance=user, data=request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+
+        return Response(serializer.validated_data, status=status.HTTP_200_OK)
 
 
 class GroupViewset(viewsets.ModelViewSet):
