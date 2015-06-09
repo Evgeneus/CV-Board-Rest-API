@@ -4,7 +4,7 @@ import views
 
 from views.loginsys import UserRegister
 from views.skill import SetSkillView
-from views.user_group import UserView
+from views.user_group import UserView, GetUsersView
 
 router = routers.DefaultRouter()
 router.register(r'groups', views.GroupViewset)
@@ -16,5 +16,6 @@ urlpatterns = [
     url(r'^auth/refresh', 'rest_framework_jwt.views.refresh_jwt_token'),
     url(r'^auth/register', UserRegister.as_view()),
     url(r'user/skill', SetSkillView.as_view()),
+    url(r'get/users', GetUsersView.as_view()),
     url(r'^user', UserView.as_view()),
 ]
