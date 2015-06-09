@@ -22,6 +22,6 @@ class SkillRateSerializer(serializers.Serializer):
         user = validated_data.get('user')
         skill = get_object_or_404(Skill, pk=skill_id)
 
-        instance = SkillRate.objects.create(user_id=user, skill_id=skill, self_rate=self_rate)
+        instance = SkillRate.objects.create(user=user, skill=skill, self_rate=self_rate)
 
         return instance

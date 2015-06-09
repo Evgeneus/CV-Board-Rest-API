@@ -28,7 +28,7 @@ class SetSkillView(APIView):
             return Response({'detail': 'skill_id must be integer'},
                             status=status.HTTP_400_BAD_REQUEST)
 
-        instance = get_object_or_404(SkillRate, user_id=user, skill_id=skill_id)
+        instance = get_object_or_404(SkillRate, user=user, skill=skill_id)
 
         serializer = SkillRateSerializer(instance=instance, data=request.data, partial=True)
         serializer.is_valid(raise_exception=True)
@@ -44,7 +44,7 @@ class SetSkillView(APIView):
             serializer.is_valid(raise_exception=True)
 
             try:
-                serializer.save(user=user, skill_id=skill_id)
+                serializer.save(user=user, skill=skill_id)
             except IntegrityError:
                 return Response({'detail': 'object alredy exists'},
                                 status=status.HTTP_400_BAD_REQUEST)

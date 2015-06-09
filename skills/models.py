@@ -19,30 +19,30 @@ class Skill(models.Model):
 
 @python_2_unicode_compatible
 class SkillRate(models.Model):
-    user_id = models.ForeignKey(ExtUser, verbose_name=_('User'), related_name='skill_rate')
-    skill_id = models.ForeignKey(Skill, verbose_name=_('Skill'), related_name='skill_rate')
+    user = models.ForeignKey(ExtUser, verbose_name=_('User'), related_name='skill_rate')
+    skill = models.ForeignKey(Skill, verbose_name=_('Skill'), related_name='skill_rate')
     self_rate = IntegerRangeField(verbose_name=_('Self rate'), min_value=1, max_value=10, blank=True, null=True)
     guests_rate = IntegerRangeField(verbose_name=_('Guests rate'), min_value=1, max_value=10, blank=True, null=True)
     result_rate = IntegerRangeField(verbose_name=_('Result rate'), min_value=1, max_value=10, blank=True, null=True)
 
     class Meta:
         verbose_name = _('Skill Rate')
-        unique_together = ('user_id', 'skill_id')
+        unique_together = ('user', 'skill')
 
     def __str__(self):
-        return 'user: {user_id}, skill: {skill_id}'.format(user_id=self.user_id, skill_id=self.skill_id)
+        return 'user: {user}, skill: {skill}'.format(user=self.user, skill=self.skill)
 
 
 @python_2_unicode_compatible
 class SkillRateLog(models.Model):
-    user_id = models.ForeignKey(ExtUser, primary_key=True, verbose_name=_('ExtUser'), related_name='skill_rate_log')
-    skill_id = models.ForeignKey(SkillRate, verbose_name=_('Skill'), related_name='skill_rate_log')
+    user = models.ForeignKey(ExtUser, primary_key=True, verbose_name=_('ExtUser'), related_name='skill_rate_log')
+    skill = models.ForeignKey(SkillRate, verbose_name=_('Skill'), related_name='skill_rate_log')
     rate = IntegerRangeField(verbose_name=_("User's rate"), min_value=1, max_value=10)
     date = models.DateTimeField(verbose_name=_('Date'), auto_now_add=True)
 
     class Meta:
         verbose_name = _('Skill Rate Log')
-        unique_together = ('user_id', 'skill_id')
+        unique_together = ('user', 'skill')
 
     def __str__(self):
-        return 'skill: {skill_id}, rate: {rate}'.format(skill_id=self.skill_id, rate=self.rate)
+        return 'skill: {skill}, rate: {rate}'.format(skill=self.skill, rate=self.rate)
