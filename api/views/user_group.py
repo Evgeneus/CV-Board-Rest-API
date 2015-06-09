@@ -26,6 +26,12 @@ class UserView(views.APIView):
 
         return Response(serializer.validated_data, status=status.HTTP_200_OK)
 
+    def delete(self, request, format=None):
+        user = request.user
+        user.delete()
+
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
 
 class GroupViewset(viewsets.ModelViewSet):
     queryset = Group.objects.all()
