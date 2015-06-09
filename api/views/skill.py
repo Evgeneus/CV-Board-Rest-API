@@ -7,6 +7,7 @@ from rest_framework.parsers import JSONParser
 from rest_framework.renderers import JSONRenderer
 from rest_framework import status
 from django.shortcuts import get_object_or_404
+from django.db import IntegrityError
 
 from skills.models import SkillRate
 from api.serializers import SkillRateSerializer
@@ -18,19 +19,34 @@ class SetSkillView(APIView):
     render_classes = (JSONRenderer,)
 
     def patch(self, request):
-        user_id = request.user
+        user = request.user
         skill_id = request.data.get('skill_id')
 
         try:
             int(skill_id)
         except ValueError:
-            return Response({'detail': 'skill_id must be integer'}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'detail': 'skill_id must be integer'},
+                            status=status.HTTP_400_BAD_REQUEST)
 
-        instance = get_object_or_404(SkillRate, user_id=user_id, skill_id=skill_id)
+        instance = get_object_or_404(SkillRate, user_id=user, skill_id=skill_id)
 
         serializer = SkillRateSerializer(instance=instance, data=request.data, partial=True)
-
-        if serializer.is_valid(raise_exception=True):
-            serializer.save()
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
 
         return Response(serializer.validated_data, status=status.HTTP_200_OK)
+
+    def post(self, request):
+            user = request.user
+            skill_id = request.data.get('skill_id')
+
+            serializer = SkillRateSerializer(data=request.data)
+            serializer.is_valid(raise_exception=True)
+
+            try:
+                serializer.save(user=user, skill_id=skill_id)
+            except IntegrityError:
+                return Response({'detail': 'object alredy exists'},
+                                status=status.HTTP_400_BAD_REQUEST)
+
+            return Response(serializer.validated_data, status=status.HTTP_201_CREATED)
