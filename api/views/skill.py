@@ -50,3 +50,12 @@ class SetSkillView(APIView):
                                 status=status.HTTP_400_BAD_REQUEST)
 
             return Response(serializer.validated_data, status=status.HTTP_201_CREATED)
+
+    def delete(self, request, format=None):
+        user = request.user
+        skill_rates = SkillRate.objects.filter(user=user)
+
+        for skill_rate in skill_rates:
+            skill_rate.delete()
+
+        return Response(status=status.HTTP_204_NO_CONTENT)
