@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 
 from django.db import models, migrations
+import helpers.model_fields
 
 
 class Migration(migrations.Migration):
@@ -23,7 +24,7 @@ class Migration(migrations.Migration):
                 ('email', models.EmailField(unique=True, max_length=255, verbose_name=b'Email address')),
                 ('date_of_birth', models.DateField(verbose_name=b'Birthday')),
                 ('is_active', models.BooleanField(default=True, verbose_name=b'Is active')),
-                ('is_admin', models.BooleanField(default=False, verbose_name=b'Is admin')),
+                ('role', helpers.model_fields.IntegerRangeField(default=0, verbose_name=b'Role')),
                 ('age', models.IntegerField(null=True, verbose_name=b'Age', blank=True)),
                 ('desired_salary', models.IntegerField(null=True, verbose_name=b'Desired salary', blank=True)),
                 ('register_date', models.DateField(auto_now_add=True, verbose_name=b'Register date')),

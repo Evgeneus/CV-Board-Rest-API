@@ -22,8 +22,8 @@ class SkillRate(models.Model):
     user = models.ForeignKey(ExtUser, verbose_name=_('User'), related_name='skill_rate')
     skill = models.ForeignKey(Skill, verbose_name=_('Skill'), related_name='skill_rate')
     self_rate = IntegerRangeField(verbose_name=_('Self rate'), min_value=1, max_value=10, blank=True, null=True)
-    guests_rate = IntegerRangeField(verbose_name=_('Guests rate'), min_value=1, max_value=10, blank=True, null=True)
-    result_rate = IntegerRangeField(verbose_name=_('Result rate'), min_value=1, max_value=10, blank=True, null=True)
+    guests_rate = models.FloatField(verbose_name=_('Guests rate'), blank=True, null=True)
+    result_rate = models.FloatField(verbose_name=_('Result rate'), blank=True, null=True)
 
     class Meta:
         verbose_name = _('Skill Rate')
@@ -35,7 +35,7 @@ class SkillRate(models.Model):
 
 @python_2_unicode_compatible
 class SkillRateLog(models.Model):
-    user = models.ForeignKey(ExtUser, primary_key=True, verbose_name=_('ExtUser'), related_name='skill_rate_log')
+    user = models.ForeignKey(ExtUser, verbose_name=_('ExtUser'), related_name='skill_rate_log')
     skill_rate = models.ForeignKey(SkillRate, verbose_name=_('Skill'), related_name='skill_rate_log')
     rate = IntegerRangeField(verbose_name=_("User's rate"), min_value=1, max_value=10)
     date = models.DateTimeField(verbose_name=_('Date'), auto_now_add=True)
