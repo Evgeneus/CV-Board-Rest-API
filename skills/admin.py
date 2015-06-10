@@ -14,4 +14,4 @@ class SkillRateAdmin(admin.ModelAdmin):
 
 @admin.register(SkillRateLog)
 class SkillRateLogAdmin(admin.ModelAdmin):
-    list_display = ['user', 'skill', 'rate', 'date']
+    list_display = ['user', 'skill_rate', 'rate', 'date']

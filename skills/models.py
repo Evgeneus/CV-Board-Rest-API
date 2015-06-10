@@ -36,13 +36,13 @@ class SkillRate(models.Model):
 @python_2_unicode_compatible
 class SkillRateLog(models.Model):
     user = models.ForeignKey(ExtUser, primary_key=True, verbose_name=_('ExtUser'), related_name='skill_rate_log')
-    skill = models.ForeignKey(SkillRate, verbose_name=_('Skill'), related_name='skill_rate_log')
+    skill_rate = models.ForeignKey(SkillRate, verbose_name=_('Skill'), related_name='skill_rate_log')
     rate = IntegerRangeField(verbose_name=_("User's rate"), min_value=1, max_value=10)
     date = models.DateTimeField(verbose_name=_('Date'), auto_now_add=True)
 
     class Meta:
         verbose_name = _('Skill Rate Log')
-        unique_together = ('user', 'skill')
+        unique_together = ('user', 'skill_rate')
 
     def __str__(self):
-        return 'skill: {skill}, rate: {rate}'.format(skill=self.skill, rate=self.rate)
+        return 'skill_rate: {skill_rate}, rate: {rate}'.format(skill_rate=self.skill_rate, rate=self.rate)
