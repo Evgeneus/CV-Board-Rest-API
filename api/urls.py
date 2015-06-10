@@ -16,8 +16,8 @@ urlpatterns = [
     url(r'^auth/login', 'rest_framework_jwt.views.obtain_jwt_token'),
     url(r'^auth/refresh', 'rest_framework_jwt.views.refresh_jwt_token'),
     url(r'^auth/register', UserRegister.as_view()),
-    url(r'user/skill/rate', SkillRateLogView.as_view()),
-    url(r'user/skill', SetSkillView.as_view()),
-    url(r'get/users', GetUsersView.as_view()),
+    url(r'^user/skill/rate', SkillRateLogView.as_view()),
+    url(r'^user/skill', SetSkillView.as_view()),
+    url(r'^get/users', GetUsersView.as_view()),
     url(r'^user', UserView.as_view()),
 ]

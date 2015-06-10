@@ -10,10 +10,11 @@ from django.db import IntegrityError
 from django.core.exceptions import PermissionDenied
 
 from api.serializers import SkillRateLogSerializer
+from helpers import IsUserOrAdmin
 
 
 class SkillRateLogView(views.APIView):
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated, IsUserOrAdmin,)
     parser_classes = (JSONParser,)
     render_classes = (JSONRenderer,)
 
