@@ -6,6 +6,7 @@ from views.loginsys import UserRegister
 from views.skill import SetSkillView
 from views.user_group import UserView, GetUsersView
 from views.skill_rate_log import SkillRateLogView
+from views.search_users import SearchUsersView
 
 router = routers.DefaultRouter()
 router.register(r'groups', views.GroupViewset)
@@ -20,4 +21,5 @@ urlpatterns = [
     url(r'^user/skill', SetSkillView.as_view()),
     url(r'^get/users', GetUsersView.as_view()),
     url(r'^user', UserView.as_view()),
+    url(r'^search/users', SearchUsersView.as_view()),
 ]

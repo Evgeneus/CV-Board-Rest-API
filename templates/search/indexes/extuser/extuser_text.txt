@@ -1,0 +1,7 @@
+{{ object.first_name }}
+{{ object.last_name }}
+{{ object.email }}
+{{ object.desired_salary }}
+{{ object.role }}
+{{ object.added_at }}
+{{ object.location }}
