@@ -1,0 +1,8 @@
+{{ object.name }}
+{{ object.type }}
+{{ object.address }}
+{{ object.email }}
+{{ object.location }}
+{{ object.description }}
+{{ object.added_at }}
+{{ object.last_change }}

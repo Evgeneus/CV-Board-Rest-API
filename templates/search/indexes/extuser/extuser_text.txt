@@ -3,5 +3,5 @@
 {{ object.email }}
 {{ object.desired_salary }}
 {{ object.role }}
-{{ object.added_at }}
+{{ object.register_date }}
 {{ object.location }}
