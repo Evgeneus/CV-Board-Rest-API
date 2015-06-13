@@ -8,9 +8,10 @@ from rest_framework import status
 from django.shortcuts import get_object_or_404
 
 from api.serializers import CompanySerializer
-from company.models import Company, CompanyManager
+from company.models import Company
 from helpers.permitions import IsManagerOrAdminOrReadOnly, IsManagerOrAdmin
 from helpers import roles
+from helpers.company_manager import is_manager_of_company
 
 
 class CreateCompanyView(APIView):
@@ -38,7 +39,7 @@ class ManageCompanyView(APIView):
         return Response(company, status=status.HTTP_200_OK)
 
     def patch(self, request, company_id):
-        if self._is_manager_of_company(manager_id=request.user.id, company_id=company_id) \
+        if is_manager_of_company(manager_id=request.user.id, company_id=company_id) \
                 or request.user.role == roles.ROLE_ADMIN:
             instance = get_object_or_404(Company, id=company_id)
             serializer = CompanySerializer(instance=instance, data=request.data, partial=True)
@@ -49,17 +50,10 @@ class ManageCompanyView(APIView):
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, company_id, format=None):
-        if self._is_manager_of_company(manager_id=request.user.id, company_id=company_id) \
+        if is_manager_of_company(manager_id=request.user.id, company_id=company_id) \
                 or request.user.role == roles.ROLE_ADMIN:
             company = get_object_or_404(Company, id=company_id)
             company.delete()
             return Response(status=status.HTTP_204_NO_CONTENT)
 
         return Response(status=status.HTTP_400_BAD_REQUEST)
-
-    def _is_manager_of_company(self, manager_id, company_id):
-        company_manager_entry = CompanyManager.objects.filter(manager=manager_id, company=company_id)
-        if company_manager_entry:
-            return True
-
-        return False
