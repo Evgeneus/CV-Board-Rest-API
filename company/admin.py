@@ -15,4 +15,4 @@ class CompanyManagerAdmin(admin.ModelAdmin):
 
 @admin.register(Job)
 class JobAdmin(admin.ModelAdmin):
-    list_display = ['name', 'description', 'added_at', 'last_change', 'company']
+    list_display = ['name', 'description', 'salary', 'added_at', 'last_change', 'company']
