@@ -6,6 +6,8 @@ from views.loginsys import UserRegister
 from views.skill import SetSkillView
 from views.user_group import UserView, GetUsersView
 from views.skill_rate_log import SkillRateLogView
+from views.company_manag import CreateCompanyView, ManageCompanyView
+from views.job import CreateJobView, ManageJobView
 from views.search_users import SearchUsersView
 
 router = routers.DefaultRouter()
@@ -21,5 +23,9 @@ urlpatterns = [
     url(r'^user/skill', SetSkillView.as_view()),
     url(r'^get/users', GetUsersView.as_view()),
     url(r'^user', UserView.as_view()),
+    url(r'^company/(?P<company_id>\d+)', ManageCompanyView.as_view()),
+    url(r'^company', CreateCompanyView.as_view()),
+    url(r'job/(?P<job_id>\d+)', ManageJobView.as_view()),
+    url(r'^job', CreateJobView.as_view()),
     url(r'^search/users', SearchUsersView.as_view()),
 ]
