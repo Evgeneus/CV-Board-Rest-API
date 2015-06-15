@@ -3,20 +3,39 @@ __all__ = ['SearchUsersView']
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
-from rest_framework.parsers import JSONParser
-from rest_framework.renderers import JSONRenderer
 from rest_framework import status
 from haystack.query import SearchQuerySet
 
-from api.serializers import SearchUsersSerializer
+from extuser.models import ExtUser
+from helpers import roles
 
 
 class SearchUsersView(APIView):
     permission_classes = (AllowAny,)
-    parser_classes = (JSONParser,)
-    renderer_classes = (JSONRenderer,)
 
     def get(self, request):
-        results = SearchQuerySet().all().values_list('location')
+        query_values = request.query_params.values()
+        text = ''
+        for value in query_values:
+            text = text + ' ' + value
 
-        return Response("ok", status=status.HTTP_200_OK)
+        if text:
+            results = SearchQuerySet().filter(text=text)\
+                                      .values('first_name', 'last_name',
+                                              'email', 'desired_salary',
+                                              'role', 'location',
+                                              'register_date')\
+                                      .models(ExtUser)
+        else:
+            results = SearchQuerySet().all().exclude(role=roles.ROLE_ADMIN)\
+                                      .values('first_name', 'last_name',
+                                              'email', 'desired_salary',
+                                              'role', 'location',
+                                              'register_date')\
+                                      .models(ExtUser)
+
+        results_list = []
+        for result in results:
+            results_list.append(result)
+
+        return Response(results_list, status=status.HTTP_200_OK)
