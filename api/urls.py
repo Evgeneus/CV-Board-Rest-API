@@ -8,7 +8,7 @@ from views.user_group import UserView, GetUsersView
 from views.skill_rate_log import SkillRateLogView
 from views.company_manag import CreateCompanyView, ManageCompanyView
 from views.job import CreateJobView, ManageJobView
-from views.search_users import SearchUsersView
+from views.search_users import SearchUsersView, SearchCompanyView
 
 router = routers.DefaultRouter()
 router.register(r'groups', views.GroupViewset)
@@ -28,4 +28,5 @@ urlpatterns = [
     url(r'job/(?P<job_id>\d+)', ManageJobView.as_view()),
     url(r'^job', CreateJobView.as_view()),
     url(r'^search/users', SearchUsersView.as_view()),
+    url(r'^search/companies', SearchCompanyView.as_view()),
 ]
