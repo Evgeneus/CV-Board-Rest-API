@@ -1,0 +1,6 @@
+{{ object.name }}
+{{ object.description }}
+{{ object.salary }}
+{{ object.added_at }}
+{{ object.last_change }}
+{{ object.company.name }}
