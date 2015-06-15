@@ -6,7 +6,7 @@ from extuser.models import ExtUser
 
 @python_2_unicode_compatible
 class Company(models.Model):
-    name = models.CharField(verbose_name=_('First name'), max_length=40)
+    name = models.CharField(verbose_name=_('Company'), max_length=40)
     address = models.CharField(verbose_name=_('Address'), max_length=500, blank=True)
     email = models.EmailField(verbose_name=_('Email address'), max_length=255, unique=True)
     location = models.CharField(verbose_name=_('Location'), max_length=40, blank=True)
@@ -39,10 +39,9 @@ class CompanyManager(models.Model):
 
 @python_2_unicode_compatible
 class Job(models.Model):
-    name = models.CharField(verbose_name=_('First name'), max_length=40)
+    name = models.CharField(verbose_name=_('Job'), max_length=40)
     description = models.TextField(verbose_name=_('Company description'), blank=True)
     salary = models.FloatField(verbose_name=_('Salary'), blank=True, null=True)
-    description = models.TextField(verbose_name=_('Company description'), blank=True)
     added_at = models.DateTimeField(verbose_name=_('Added date'), auto_now_add=True)
     last_change = models.DateTimeField(verbose_name=_('Last change'), auto_now=True)
     company = models.ForeignKey(Company, verbose_name=_('Company'), related_name='job')
