@@ -15,11 +15,8 @@ class SearchUsersView(APIView):
     permission_classes = (AllowAny,)
 
     def get(self, request):
-        query_values = request.query_params.values()
-        text = ''
-        for value in query_values:
-            text = text + ' ' + value
-
+        query_values = request.query_params
+        text = query_values.get('text')
         if text:
             results = SearchQuerySet().filter(text=text)\
                                       .values('first_name', 'last_name',
@@ -46,11 +43,8 @@ class SearchCompanyView(APIView):
     permission_classes = (AllowAny,)
 
     def get(self, request):
-        query_values = request.query_params.values()
-        text = ''
-        for value in query_values:
-            text = text + ' ' + value
-
+        query_values = request.query_params
+        text = query_values.get('text')
         if text:
             results = SearchQuerySet().filter(text=text)\
                                       .values('name', 'type',
@@ -77,11 +71,8 @@ class SearchJobView(APIView):
     permission_classes = (AllowAny,)
 
     def get(self, request):
-        query_values = request.query_params.values()
-        text = ''
-        for value in query_values:
-            text = text + ' ' + value
-
+        query_values = request.query_params
+        text = query_values.get('text')
         if text:
             results = SearchQuerySet().filter(text=text)\
                                       .values('name', 'company',

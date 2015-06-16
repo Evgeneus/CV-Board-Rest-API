@@ -8,7 +8,7 @@ from views.user_group import UserView, GetUsersView
 from views.skill_rate_log import SkillRateLogView
 from views.company_manag import CreateCompanyView, ManageCompanyView
 from views.job import CreateJobView, ManageJobView
-from views.search_users import SearchUsersView, SearchCompanyView, SearchJobView
+from views.search import SearchUsersView, SearchCompanyView, SearchJobView
 
 router = routers.DefaultRouter()
 router.register(r'groups', views.GroupViewset)
