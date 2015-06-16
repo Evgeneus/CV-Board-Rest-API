@@ -20,14 +20,16 @@ class SearchUsersView(APIView):
         if text:
             results = SearchQuerySet().filter(text=text)\
                                       .values('first_name', 'last_name',
-                                              'email', 'desired_salary',
+                                              'email', 'age',
+                                              'desired_salary',
                                               'role', 'location',
                                               'register_date')\
                                       .models(ExtUser)
         else:
             results = SearchQuerySet().all().exclude(role=roles.ROLE_ADMIN)\
                                       .values('first_name', 'last_name',
-                                              'email', 'desired_salary',
+                                              'email', 'age',
+                                              'desired_salary',
                                               'role', 'location',
                                               'register_date')\
                                       .models(ExtUser)

@@ -1,5 +1,6 @@
 {{ object.first_name }}
 {{ object.last_name }}
+{{ object.age }}
 {{ object.email }}
 {{ object.desired_salary }}
 {{ object.role }}
