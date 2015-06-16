@@ -25,7 +25,7 @@ class JobIndex(indexes.SearchIndex, indexes.Indexable):
     text = indexes.CharField(document=True, use_template=True)
     name = indexes.CharField(model_attr='name')
     description = indexes.CharField(model_attr='description')
-    salary = indexes.FloatField(model_attr='salary')
+    salary = indexes.FloatField(model_attr='salary', default=None)
     added_at = indexes.DateTimeField(model_attr='added_at')
     last_change = indexes.DateTimeField(model_attr='last_change')
     company = indexes.CharField(model_attr='company')

@@ -6,6 +6,7 @@ from django.contrib.auth.models import (
 
 from helpers import IntegerRangeField
 from helpers import roles
+from tasks import update_indexes
 
 
 class ExtUserManager(BaseUserManager):
@@ -102,3 +103,7 @@ class ExtUser(AbstractBaseUser, PermissionsMixin):
             return True
         else:
             return False
+
+    def save(self, *args, **kwargs):
+        super(ExtUser, self).save(*args, **kwargs)
+        update_indexes.delay()

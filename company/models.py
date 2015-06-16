@@ -2,6 +2,7 @@ from django.db import models
 from django.utils.translation import ugettext as _
 from django.utils.encoding import python_2_unicode_compatible
 from extuser.models import ExtUser
+from tasks import update_indexes
 
 
 @python_2_unicode_compatible
@@ -21,6 +22,10 @@ class Company(models.Model):
 
     def __str__(self):
         return 'company: {name}'.format(name=self.name)
+
+    def save(self, *args, **kwargs):
+        super(Company, self).save(*args, **kwargs)
+        update_indexes.delay()
 
 
 @python_2_unicode_compatible
@@ -52,3 +57,7 @@ class Job(models.Model):
 
     def __str__(self):
         return 'job: {name}'.format(name=self.name)
+
+    def save(self, *args, **kwargs):
+        super(Job, self).save(*args, **kwargs)
+        update_indexes.delay()
