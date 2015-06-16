@@ -15,7 +15,7 @@ import os
 import djcelery
 
 djcelery.setup_loader()
-CELERY_IMPORTS = ("cv_board.tasks", )
+CELERY_IMPORTS = ("tasks", )
 BROKER_URL = 'amqp://guest:guest@localhost:5672//'
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -61,7 +61,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.security.SecurityMiddleware',
 )
 
-ROOT_URLCONF = 'cv_board.urls'
+ROOT_URLCONF = 'urls'
 
 TEMPLATES = [
     {
@@ -79,7 +79,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'cv_board.wsgi.application'
+WSGI_APPLICATION = 'wsgi.application'
 
 
 # Database
