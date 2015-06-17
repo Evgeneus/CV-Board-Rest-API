@@ -23,12 +23,7 @@ class RequestFromUserView(APIView):
 
     def get(self, request):
         user = request.user
-        job_id = request.query_params.get('job_id')
-        if job_id:
-            job = get_object_or_404(Job, id=job_id)
-            job_requests = RequestFromUser.objects.filter(user=user, job=job).values()
-        else:
-            job_requests = RequestFromUser.objects.filter(user=user).values()
+        job_requests = RequestFromUser.objects.filter(user=user).values()
 
         return Response(job_requests, status=status.HTTP_200_OK)
 
