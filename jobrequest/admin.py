@@ -1,5 +1,5 @@
 from django.contrib import admin
-from request.models import RequestFromUser, RequestFromCompany
+from jobrequest.models import RequestFromUser, RequestFromCompany
 
 
 @admin.register(RequestFromUser)
