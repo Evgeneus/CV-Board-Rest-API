@@ -48,6 +48,7 @@ INSTALLED_APPS = (
     'extuser',
     'skills',
     'company',
+    'request',
 )
 
 MIDDLEWARE_CLASSES = (
