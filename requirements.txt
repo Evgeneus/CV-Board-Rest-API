@@ -3,7 +3,7 @@ anyjson==0.3.3
 billiard==3.3.0.20
 celery==3.1.18
 celery-haystack==0.9
-Django==1.8.2
+Django==1.11.29
 django-appconf==1.0.1
 django-celery-transactions==0.3.2
 django-haystack==2.4.0
